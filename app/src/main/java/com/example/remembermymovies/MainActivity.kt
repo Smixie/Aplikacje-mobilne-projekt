@@ -39,8 +39,8 @@ class MainActivity : AppCompatActivity() {
 
         createAccount.setOnClickListener {
             Log.i("Test Create User Link", "Clicked")
-            val intent = Intent(this, CreateAnAccountActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, CreateAnAccountActivity::class.java))
         }
     }
+
 }

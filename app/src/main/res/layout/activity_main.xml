@@ -6,31 +6,35 @@
     android:background="@drawable/login_page"
     android:layout_height="match_parent"
     android:padding="20dp"
+
     tools:context=".MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:gravity="center"
+        android:orientation="vertical"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.495"
         tools:ignore="MissingConstraints,UselessLeaf"
-        tools:layout_editor_absoluteX="-2dp">
+        tools:layout_editor_absoluteX="3dp">
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/baseline_account_circle_24"
-            />
+            android:contentDescription="@string/account_image"
+            android:src="@drawable/baseline_account_circle_24" />
 
 
         <EditText
             android:id="@+id/email_address_login"
-            android:layout_width="match_parent"
+            android:layout_width="340dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
+            android:autofillHints="no"
             android:background="@drawable/round"
             android:hint="Email address"
             android:inputType="textEmailAddress"
@@ -38,14 +42,14 @@
             android:textColor="@color/white"
             android:textColorHint="@color/white"
             android:textSize="23sp"
-            tools:ignore="HardcodedText"
-            android:autofillHints="no" />
+            tools:ignore="HardcodedText" />
 
         <EditText
             android:id="@+id/password_input"
-            android:layout_width="match_parent"
+            android:layout_width="340dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
+            android:autofillHints="no"
             android:background="@drawable/round"
             android:hint="Password"
             android:inputType="textPassword"
@@ -53,41 +57,39 @@
             android:textColor="@color/white"
             android:textColorHint="@color/white"
             android:textSize="23sp"
-            tools:ignore="HardcodedText"
-            android:autofillHints="no" />
+            tools:ignore="HardcodedText" />
 
         <Button
-            android:layout_width="match_parent"
+            android:id="@+id/login_button"
+            android:layout_width="305dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:textSize="25sp"
-            android:text="Login"
             android:background="@drawable/round"
             android:backgroundTint="@color/white"
             android:padding="10dp"
-            android:id="@+id/login_button"
-            android:textColor="@color/blue"
+            android:text="LOGIN"
+            android:textColor="@color/white"
+            android:textSize="20sp"
 
             tools:ignore="HardcodedText" />
 
         <TextView
+            android:id="@+id/create_account"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:textColor="@color/white"
-            android:textSize="20sp"
             android:gravity="center"
-            android:id="@+id/create_account"
-            />
+            android:textColor="@color/white"
+            android:textSize="20sp" />
 
         <ImageView
+            android:id="@+id/google_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/google"
             android:layout_marginTop="30dp"
             android:contentDescription="Google Login"
+            android:src="@drawable/google"
             tools:ignore="HardcodedText"
-            android:id="@+id/google_login"
 
             />
     </LinearLayout>

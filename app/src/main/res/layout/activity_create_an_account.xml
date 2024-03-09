@@ -12,26 +12,29 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:gravity="center"
+        android:orientation="vertical"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.495"
         tools:ignore="MissingConstraints,UselessLeaf"
-        tools:layout_editor_absoluteX="-2dp">
+        tools:layout_editor_absoluteX="19dp">
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/baseline_account_circle_24"
-            />
+            android:contentDescription="@string/account_image"
+            android:src="@drawable/baseline_account_circle_24" />
 
 
         <EditText
             android:id="@+id/email_address_register"
-            android:layout_width="match_parent"
+            android:layout_width="340dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
+            android:autofillHints="no"
             android:background="@drawable/round"
             android:hint="Email address"
             android:inputType="textEmailAddress"
@@ -39,14 +42,14 @@
             android:textColor="@color/white"
             android:textColorHint="@color/white"
             android:textSize="23sp"
-            tools:ignore="HardcodedText"
-            android:autofillHints="no" />
+            tools:ignore="HardcodedText" />
 
         <EditText
             android:id="@+id/password_input_register"
-            android:layout_width="match_parent"
+            android:layout_width="340dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
+            android:autofillHints="no"
             android:background="@drawable/round"
             android:hint="Password"
             android:inputType="textPassword"
@@ -54,14 +57,14 @@
             android:textColor="@color/white"
             android:textColorHint="@color/white"
             android:textSize="23sp"
-            tools:ignore="HardcodedText"
-            android:autofillHints="no" />
+            tools:ignore="HardcodedText" />
 
         <EditText
             android:id="@+id/password2_input_register"
-            android:layout_width="match_parent"
+            android:layout_width="340dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
+            android:autofillHints="no"
             android:background="@drawable/round"
             android:hint="Retype password"
             android:inputType="textPassword"
@@ -69,21 +72,20 @@
             android:textColor="@color/white"
             android:textColorHint="@color/white"
             android:textSize="23sp"
-            tools:ignore="HardcodedText"
-            android:autofillHints="no" />
+            tools:ignore="HardcodedText" />
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:textSize="25sp"
-                android:text="@string/create_account"
-                android:background="@drawable/round"
-                android:backgroundTint="@color/white"
-                android:padding="10dp"
-                android:id="@+id/register_button"
+        <Button
+            android:id="@+id/register_button"
+            android:layout_width="305dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/round"
+            android:backgroundTint="@color/white"
+            android:padding="10dp"
+            android:text="@string/create_account"
+            android:textColor="@color/white"
 
-                android:textColor="@color/blue"/>
+            android:textSize="20sp" />
 
 
     </LinearLayout>
@@ -96,6 +98,6 @@
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="20dp"
         tools:layout_editor_absoluteY="16dp"
-        />
+        android:contentDescription="@string/back_arrow" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

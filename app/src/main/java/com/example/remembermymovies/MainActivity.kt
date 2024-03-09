@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
         splash = findViewById(R.id.splash)
         splash.postDelayed(
             {
-            startActivity(Intent(this, LoginActivity::class.java))
+            startActivity(Intent(this, LoginPageActivity::class.java))
             },2000)
 
 

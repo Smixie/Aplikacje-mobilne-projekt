@@ -3,4 +3,6 @@
     <string name="create_account">CREATE ACCOUNT</string>
     <string name="account_image">account_image</string>
     <string name="back_arrow">back_arrow</string>
+    <string name="splash">splash</string>
+    <string name="start_quote">Simple app to remember movies</string>
 </resources>

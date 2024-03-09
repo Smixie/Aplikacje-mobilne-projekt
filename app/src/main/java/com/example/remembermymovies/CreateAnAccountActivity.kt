@@ -28,7 +28,7 @@ class CreateAnAccountActivity : AppCompatActivity() {
 
         backButton = findViewById(R.id.back_to_login)
         backButton.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
 
@@ -50,7 +50,7 @@ class CreateAnAccountActivity : AppCompatActivity() {
                 auth.createUserWithEmailAndPassword(registerEmail, password1)
                     .addOnCompleteListener {
                         if (it.isSuccessful) {
-                            val intent = Intent(this, MainActivity::class.java)
+                            val intent = Intent(this, LoginActivity::class.java)
                             startActivity(intent)
                             Log.i("Register", "Account has been created successfully!")
                         } else {
@@ -66,7 +66,7 @@ class CreateAnAccountActivity : AppCompatActivity() {
         super.onStart()
 
         if (auth.currentUser != null) {
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
     }

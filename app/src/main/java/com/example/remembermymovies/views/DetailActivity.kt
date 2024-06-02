@@ -146,7 +146,7 @@ class DetailActivity : AppCompatActivity() {
                     var movieExists = false
 
                     for (movie in dataSnapshot.children) {
-                        if (movie.value == movieId) {
+                        if (movie.child("id").value == movieId) {
                             movieExists = true
                             break
                         }

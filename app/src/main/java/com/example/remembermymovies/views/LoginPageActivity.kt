@@ -23,8 +23,11 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class LoginPageActivity : AppCompatActivity() {
     private lateinit var emailInput: EditText
@@ -127,19 +130,31 @@ class LoginPageActivity : AppCompatActivity() {
                     database = FirebaseDatabase.getInstance(Constants.DATABASE_URL).reference.child("users")
 
                     if (userId != null) {
-                        val userName = account.displayName
+                        database.child(userId).addListenerForSingleValueEvent(object :
+                            ValueEventListener {
+                            override fun onDataChange(snapshot: DataSnapshot) {
+                                if (!snapshot.exists()) {
+                                    // User does not exist, create a new account
+                                    val userName = account.displayName
+                                    val data = hashMapOf(
+                                        "userName" to userName
+                                    )
 
-                        database.child(userId).child("movies").setValue("").addOnSuccessListener {
-                            Log.i("Register", "User has been added to the database!")
-                        }.addOnFailureListener {
-                            Log.i("Register", "Error occurred while adding user to the database!")
-                        }
+                                    database.child(userId).setValue(data).addOnSuccessListener {
+                                        Log.i("Register", "User has been added to the database!")
+                                    }.addOnFailureListener {
+                                        Log.i("Register", "Error occurred while adding user to the database!")
+                                    }
+                                } else {
+                                    // User already exists, continue logging in
+                                    Log.i("Login", "User already exists in the database!")
+                                }
+                            }
 
-                        database.child(userId).child("userName").setValue(userName).addOnSuccessListener {
-                            Log.i("Register", "User name has been added to the database!")
-                        }.addOnFailureListener {
-                            Log.i("Register", "Error occurred while adding user name to the database!")
-                        }
+                            override fun onCancelled(error: DatabaseError) {
+                                Log.e("Login", "Error occurred while checking if user exists in the database!", error.toException())
+                            }
+                        })
                     }
 
                     startActivity(Intent(this, MovieActivity::class.java))

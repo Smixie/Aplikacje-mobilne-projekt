@@ -64,6 +64,7 @@ dependencies {
     implementation("com.github.antonKozyriatskyi:CircularProgressIndicator:1.3.0")
     implementation(libs.firebase.auth.ktx)
     implementation(libs.firebase.database)
+    implementation(libs.androidx.drawerlayout)
 
     testImplementation(libs.junit)
 

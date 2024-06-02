@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.remembermymovies.R
+import com.example.remembermymovies.core.Constants
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -22,6 +23,8 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.auth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 class LoginPageActivity : AppCompatActivity() {
     private lateinit var emailInput: EditText
@@ -31,6 +34,7 @@ class LoginPageActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var googleLogin: ImageView
     private lateinit var googleSignInClient: GoogleSignInClient
+    private lateinit var database: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -119,6 +123,25 @@ class LoginPageActivity : AppCompatActivity() {
         auth.signInWithCredential(credential)
             .addOnCompleteListener {
                 if (it.isSuccessful) {
+                    val userId = auth.currentUser?.uid
+                    database = FirebaseDatabase.getInstance(Constants.DATABASE_URL).reference.child("users")
+
+                    if (userId != null) {
+                        val userName = account.displayName
+
+                        database.child(userId).child("movies").setValue("").addOnSuccessListener {
+                            Log.i("Register", "User has been added to the database!")
+                        }.addOnFailureListener {
+                            Log.i("Register", "Error occurred while adding user to the database!")
+                        }
+
+                        database.child(userId).child("userName").setValue(userName).addOnSuccessListener {
+                            Log.i("Register", "User name has been added to the database!")
+                        }.addOnFailureListener {
+                            Log.i("Register", "Error occurred while adding user name to the database!")
+                        }
+                    }
+
                     startActivity(Intent(this, MovieActivity::class.java))
                     finish()
                 } else {

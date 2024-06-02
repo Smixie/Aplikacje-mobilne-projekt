@@ -89,7 +89,7 @@ class MovieToWatchActivity : AppCompatActivity() {
                 Log.e("MoviesToWatchActivity", "Error fetching movies", error.toException())
             }
         }
-        database.addValueEventListener(valueEventListener)
+        database.addListenerForSingleValueEvent(valueEventListener)
     }
 
     private fun setupDrawerNavigation() {

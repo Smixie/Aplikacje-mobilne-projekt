@@ -6,30 +6,34 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/camer_icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/camer_icon_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Remembermymovies"
+        android:theme="@style/Theme.RememberMyMovies"
         tools:targetApi="31">
         <activity
-            android:name=".WelcomeDashboard"
-            android:exported="false" />
-        <activity
-            android:name=".LoginPageActivity"
-            android:exported="true" />
-        <activity
-            android:name=".CreateAnAccountActivity"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity"
+            android:name=".views.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".views.LoginPageActivity"
+            android:exported="true" />
+        <activity
+            android:name=".views.CreateAnAccountActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.MovieActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.DetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.MoviesToWatchActivity"
+            android:exported="false" />
     </application>
-
 </manifest>

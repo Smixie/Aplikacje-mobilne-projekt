@@ -7,44 +7,33 @@
     android:layout_height="match_parent"
     android:padding="20dp"
 
-    tools:context=".MainActivity">
+    tools:context="views.MainActivity">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="394dp"
+        android:layout_height="342dp"
         android:gravity="center"
         android:orientation="vertical"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.495"
+        app:layout_constraintVertical_bias="0.498"
         tools:ignore="MissingConstraints,UseCompoundDrawables,UselessLeaf"
-        tools:layout_editor_absoluteX="3dp">
+        tools:layout_editor_absoluteX="-47dp">
 
         <ImageView
             android:id="@+id/splash"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="233dp"
             android:contentDescription="@string/splash"
-            android:src="@drawable/remember_my_movies"
+            android:rotation="30"
+            android:src="@drawable/remember_my_movies_new"
             tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="24dp"
+            tools:layout_editor_absoluteX="20dp"
             tools:layout_editor_absoluteY="126dp" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:text="@string/start_quote"
-            android:textSize="25sp"
-            android:textColor="@color/white"
-            />
-
-
     </LinearLayout>
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

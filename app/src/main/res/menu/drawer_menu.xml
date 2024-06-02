@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_first_item"
+            android:title="@string/main_page" />
+        <item
+            android:id="@+id/nav_second_item"
+            android:title="@string/to_see" />
+        <item
+            android:id="@+id/nav_random_movie"
+            android:title="@string/random_movie" />
+        <item
+            android:id="@+id/nav_logout"
+            android:title="@string/logout" />
+    </group>
+</menu>

@@ -44,6 +44,8 @@ class MovieToWatchActivity : AppCompatActivity() {
         fetchMovies()
 
         setupDrawerNavigation()
+
+
     }
 
     private fun setupRecyclerView() {

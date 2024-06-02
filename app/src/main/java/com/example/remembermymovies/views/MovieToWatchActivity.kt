@@ -3,17 +3,16 @@ package com.example.remembermymovies.views
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.MenuItem
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.remembermymovies.R
 import com.example.remembermymovies.core.Constants
-import com.example.remembermymovies.databinding.ActivityMovieBinding
-import com.example.remembermymovies.viewmodels.MovieViewModel
+import com.example.remembermymovies.databinding.ActivityMoviesToWatchBinding
+import com.example.remembermymovies.modele.MovieDetails
+import com.example.remembermymovies.network.RetrofitClient
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -21,33 +20,74 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class MovieActivity : AppCompatActivity(), MovieAdapter.OnItemClickListener {
+class MovieToWatchActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMovieBinding
-    private lateinit var viewModel: MovieViewModel
-    private lateinit var adapter: MovieAdapter
+    private lateinit var binding: ActivityMoviesToWatchBinding
+    private lateinit var database: DatabaseReference
+    private lateinit var adapter: MovieToWatchAdapter
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var toggle: ActionBarDrawerToggle
-    private lateinit var database: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMovieBinding.inflate(layoutInflater)
+        binding = ActivityMoviesToWatchBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        setupDrawerNavigation()
-
-        viewModel = ViewModelProvider(this)[MovieViewModel::class.java]
 
         setupRecyclerView()
 
-        viewModel.moviesList.observe(this) {
-            adapter.listMovies = it
-            adapter.notifyDataSetChanged()
-        }
+        fetchMovies()
 
-        viewModel.getPopular(1)
+        setupDrawerNavigation()
+    }
+
+    private fun setupRecyclerView() {
+        val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.recyclerViewToWatch.layoutManager = layoutManager
+        adapter = MovieToWatchAdapter(arrayListOf())
+        binding.recyclerViewToWatch.adapter = adapter
+    }
+
+    private fun fetchMovies() {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
+        database = FirebaseDatabase.getInstance(Constants.DATABASE_URL).reference.child("users")
+            .child(userId!!).child("movies")
+
+        val movieList = ArrayList<String>()
+        val moviesData = ArrayList<MovieDetails>()
+        val valueEventListener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (ds in snapshot.children) {
+                    val movieId = ds.child("id").getValue(String::class.java)
+                    if (movieId != null) {
+                        movieList.add(movieId)
+                    }
+                }
+
+                CoroutineScope(Dispatchers.IO).launch {
+                    for (id in movieList) {
+                        val response = RetrofitClient.webService.getMovieDetail(id, Constants.API_KEY)
+                        if (response.isSuccessful) {
+                            val movie = response.body()!!
+                            moviesData.add(movie)
+                        }
+                    }
+                    delay(2000)
+                    withContext(Dispatchers.Main) {
+                        adapter.updateMovies(moviesData)
+                    }
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("MoviesToWatchActivity", "Error fetching movies", error.toException())
+            }
+        }
+        database.addValueEventListener(valueEventListener)
     }
 
     private fun setupDrawerNavigation() {
@@ -99,25 +139,5 @@ class MovieActivity : AppCompatActivity(), MovieAdapter.OnItemClickListener {
     private fun navigateToActivity(activityClass: Class<*>) {
         val intent = Intent(this, activityClass)
         startActivity(intent)
-    }
-
-    private fun setupRecyclerView() {
-        val layoutManager = GridLayoutManager(this, 2)
-        binding.recyclerView.layoutManager = layoutManager
-        adapter = MovieAdapter(this, arrayListOf(), this)
-        binding.recyclerView.adapter = adapter
-    }
-
-    override fun onItemClick(movieId: String) {
-        val intent = Intent(this, DetailActivity::class.java)
-        intent.putExtra("MOVIE_ID", movieId)
-        startActivity(intent)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (toggle.onOptionsItemSelected(item)) {
-            return true
-        }
-        return super.onOptionsItemSelected(item)
     }
 }

@@ -84,7 +84,7 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
-    fun manageToWatchList(movieId: String) {
+    private fun manageToWatchList(movieId: String) {
         database = FirebaseDatabase.getInstance(Constants.DATABASE_URL).reference.child("users")
 
         binding.heartIcon.setOnClickListener {
@@ -98,7 +98,7 @@ class DetailActivity : AppCompatActivity() {
                         var movieToDelete: DataSnapshot? = null
 
                         for (movie in dataSnapshot.children) {
-                            if (movie.value == movieId) {
+                            if (movie.child("id").value == movieId) {
                                 movieToDelete = movie
                                 break
                             }
@@ -113,7 +113,11 @@ class DetailActivity : AppCompatActivity() {
                                 Log.d("DetailActivity", "Error while removing movie from the database")
                             }
                         } else {
-                            movieReference.push().setValue(movieId).addOnSuccessListener {
+                            val movieData = hashMapOf(
+                                "id" to movieId,
+                                "watched" to false
+                            )
+                            movieReference.push().setValue(movieData).addOnSuccessListener {
                                 Log.d("DetailActivity", "Movie added to the database")
                                 binding.heartIcon.setImageResource(R.drawable.ic_heart_filled)
                             }.addOnFailureListener {
@@ -131,7 +135,7 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
-    fun checkIfMovieExistsInDatabase(movieId: String) {
+    private fun checkIfMovieExistsInDatabase(movieId: String) {
         val userId = FirebaseAuth.getInstance().currentUser?.uid
 
         if (userId != null) {

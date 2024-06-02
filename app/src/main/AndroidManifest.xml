@@ -33,7 +33,7 @@
             android:name=".views.DetailActivity"
             android:exported="false" />
         <activity
-            android:name=".views.MoviesToWatchActivity"
+            android:name=".views.MovieToWatchActivity"
             android:exported="false" />
     </application>
 </manifest>
